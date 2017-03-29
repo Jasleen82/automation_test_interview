@@ -8,6 +8,21 @@
  * 
  * */
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+
 
 @Test(groups={"localTest"})
 public class GoogleExampleIT {
@@ -15,6 +30,14 @@ public class GoogleExampleIT {
 	private WebDriver driver;
 	@FindBy(css = "[name='q']")
 	private WebElement searchBar;
+
+	@BeforeMethod
+	public void setUp() {
+		System.setProperty("webdriver.gecko.driver", "./geckodriver");
+		driver = new FirefoxDriver();
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 60), this);
+		driver.get("http://www.google.com");
+	}
 
 	@Test
 	public void googleCheeseExample() throws Exception {
@@ -32,14 +55,6 @@ public class GoogleExampleIT {
 		searchBar.sendKeys(Keys.ENTER);
 		LOGGER.info("Page title is: {}", driver.getTitle());
 		Assert.assertTrue(driver.getTitle().equals("Google"));
-	}
-
-	@BeforeMethod
-	public void setUp() {
-		
-		driver = new new FirefoxDriver();
-		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 60), this);
-		driver.get("http://www.google.com");
 	}
 
 	@AfterMethod
