@@ -46,15 +46,17 @@ public class GoogleExampleIT {
 		searchBar.sendKeys(Keys.ENTER);
 		LOGGER.info("Page title is: " + driver.getTitle());
 		Assert.assertTrue(driver.getTitle().equals("Google"));
+		Assert.assertTrue(driver.getPageSource().contains("Cheese"));
 	}
 
-	@Test(enabled = true)
+	@Test
 	public void googleMilkExample() throws Exception {
 		searchBar.clear();
 		searchBar.sendKeys("Milk!");
 		searchBar.sendKeys(Keys.ENTER);
 		LOGGER.info("Page title is: {}", driver.getTitle());
 		Assert.assertTrue(driver.getTitle().equals("Google"));
+		Assert.assertTrue(driver.getPageSource().contains("Milk"));
 	}
 
 	@AfterMethod
